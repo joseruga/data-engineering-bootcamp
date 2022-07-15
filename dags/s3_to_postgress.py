@@ -15,7 +15,7 @@ STABILITY_STATE = "stable"
 CLOUD_PROVIDER = "aws"
 
 # AWS constants
-AWS_CONN_ID = "aws_default"
+AWS_CONN_ID = "project_s3_conn"
 S3_BUCKET_NAME = "s3-data-bootcamp-elchemarug010200320220715175101446900000004"
 S3_KEY_NAME = "user_purchase.csv"
 
