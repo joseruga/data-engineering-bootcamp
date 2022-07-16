@@ -51,8 +51,8 @@ def ingest_data_from_s3(
                 unit_price,
                 customer_id,
                 country) 
-                FROM ‘s3-data-bootcamp-elchemarug0102003/user_purchase.csv’ 
-                DELIMITER ‘,’ CSV HEADER;""", filename = local_filename)
+                FROM 's3-data-bootcamp-elchemarug0102003/user_purchase.csv' 
+                DELIMITER ',' CSV HEADER;""", filename = local_filename)
 
 
 with DAG(
