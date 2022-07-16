@@ -55,16 +55,16 @@ engine_version = "12.8"
 
 instance_type = "db.t2.micro"
 
-database_name = "dbname"
+database_name = "users_purchase_data"
 
 db_username = "dbuser"
 
-db_password = "dbpassword"
+db_password = "josellogg93!"
 
 publicly_accessible = false
 
 #### S3 variables ####
-bucket_prefix = "s3-data-bootcamp-elchemarug0102003"
+bucket = "s3-data-bootcamp-elchemarug0102003"
 
 acl = "private"
 

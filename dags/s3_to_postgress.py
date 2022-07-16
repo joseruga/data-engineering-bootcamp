@@ -16,7 +16,7 @@ CLOUD_PROVIDER = "aws"
 
 # AWS constants
 AWS_CONN_ID = "project_s3_conn"
-S3_BUCKET_NAME = "s3-data-bootcamp-elchemarug010200320220715175101446900000004"
+S3_BUCKET_NAME = "terraform-20220716000528925600000005"
 S3_KEY_NAME = "user_purchase.csv"
 
 # Postgres constants
@@ -43,7 +43,16 @@ def ingest_data_from_s3(
     s3_hook = S3Hook(aws_conn_id=aws_conn_id)
     psql_hook = PostgresHook(postgres_conn_id)
     local_filename = s3_hook.download_file(key=s3_key, bucket_name=s3_bucket)
-    psql_hook.bulk_load(table=postgres_table, tmp_file=local_filename)
+    psql_hook.copyy_expert(sql = """COPY user_purchase(invoice_number varchar(10),
+                stock_code,
+                detail,
+                quantity,
+                invoice_date,
+                unit_price,
+                customer_id,
+                country) 
+                FROM ‘s3://terraform-20220716000528925600000005/user_purchase.csv’ 
+                DELIMITER ‘,’ CSV HEADER;""", filename = local_filename)
 
 
 with DAG(
