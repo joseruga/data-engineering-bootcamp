@@ -44,7 +44,8 @@ def ingest_data_from_s3_old(
     s3_hook = S3Hook(aws_conn_id=aws_conn_id)
     psql_hook = PostgresHook(postgres_conn_id)
     local_filename = s3_hook.download_file(key=s3_key, bucket_name=s3_bucket)
-    psql_hook.copy_expert(sql = """COPY user_purchase(invoice_number,
+    psql_hook.copy_expert(sql = """COPY user_purchase(
+                invoice_number,
                 stock_code,
                 detail,
                 quantity,
@@ -70,9 +71,9 @@ def ingest_data_from_s3(
     cur = get_postgres_conn.cursor("cursor")
     with open(local_filename, 'r') as f:
         reader = csv.reader(f, delimiter = ",", quotechar='"')
-        next(f)
+        next(reader)
         for row in reader:
-            cur.copy_from(row, postgres_table, sep=',')
+            cur.execute("INSERT INTO user_purchase VALUES (%s, %s, %s, %s,%s, %s, %s, %s)", row)
         get_postgres_conn.commit()
 
 
