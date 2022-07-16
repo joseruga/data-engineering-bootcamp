@@ -68,7 +68,7 @@ def ingest_data_from_s3(
     s3_hook = S3Hook(aws_conn_id=aws_conn_id)
     local_filename = s3_hook.download_file(key=s3_key, bucket_name=s3_bucket)
     get_postgres_conn = PostgresHook(postgres_conn_id).get_conn()
-    cur = get_postgres_conn.cursor("cursor")
+    cur = get_postgres_conn.cursor()
     with open(local_filename, 'r') as f:
         reader = csv.reader(f, delimiter = ",", quotechar='"')
         next(reader)
