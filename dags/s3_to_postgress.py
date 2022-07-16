@@ -43,7 +43,7 @@ def ingest_data_from_s3(
     s3_hook = S3Hook(aws_conn_id=aws_conn_id)
     psql_hook = PostgresHook(postgres_conn_id)
     local_filename = s3_hook.download_file(key=s3_key, bucket_name=s3_bucket)
-    psql_hook.copy_expert(sql = """COPY user_purchase(invoice_number,
+    psql_hook.copy_expert(sql = """\COPY user_purchase(invoice_number,
                 stock_code,
                 detail,
                 quantity,
