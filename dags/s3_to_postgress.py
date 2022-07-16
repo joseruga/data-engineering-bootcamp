@@ -26,7 +26,7 @@ POSTGRES_SCHEMA_NAME = "users_purchase_data"
 POSTGRES_TABLE_NAME = "user_purchase"
 
 
-def ingest_data_from_s3_old(
+def ingest_data_from_s3(
     s3_bucket: str,
     s3_key: str,
     postgres_table: str,
@@ -53,12 +53,12 @@ def ingest_data_from_s3_old(
                 unit_price,
                 customer_id,
                 country) 
-                FROM 's3-data-bootcamp-elchemarug0102003/user_purchase.csv' 
+                FROM STDIN
                 DELIMITER ',' CSV HEADER;""", filename = local_filename)
 
     
 
-def ingest_data_from_s3(
+def ingest_data_from_s3_new(
     s3_bucket: str,
     s3_key: str,
     postgres_table: str,
@@ -70,7 +70,7 @@ def ingest_data_from_s3(
     get_postgres_conn = PostgresHook(postgres_conn_id).get_conn()
     cur = get_postgres_conn.cursor()
     with open(local_filename, 'r') as f:
-        reader = csv.reader(f, delimiter = ",", quotechar='"')
+        reader = csv.reader(f)
         next(reader)
         for row in reader:
             cur.execute("INSERT INTO user_purchase VALUES (%s, %s, %s, %s,%s, %s, %s, %s)", row)
