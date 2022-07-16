@@ -89,7 +89,7 @@ with DAG(
         bucket_key=S3_KEY_NAME,
     )
 
-    create_table_entity = PythonOperator(
+    create_table_entity = PostgresOperator(
         task_id="create_table_entity",
         postgres_conn_id=POSTGRES_CONN_ID,
         sql=f"""
