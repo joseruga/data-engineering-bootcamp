@@ -16,7 +16,7 @@ CLOUD_PROVIDER = "aws"
 
 # AWS constants
 AWS_CONN_ID = "project_s3_conn"
-S3_BUCKET_NAME = "terraform-20220716000528925600000005"
+S3_BUCKET_NAME = "s3-data-bootcamp-elchemarug0102003"
 S3_KEY_NAME = "user_purchase.csv"
 
 # Postgres constants
@@ -51,7 +51,7 @@ def ingest_data_from_s3(
                 unit_price,
                 customer_id,
                 country) 
-                FROM ‘s3://terraform-20220716000528925600000005/user_purchase.csv’ 
+                FROM ‘s3-data-bootcamp-elchemarug0102003/user_purchase.csv’ 
                 DELIMITER ‘,’ CSV HEADER;""", filename = local_filename)
 
 
