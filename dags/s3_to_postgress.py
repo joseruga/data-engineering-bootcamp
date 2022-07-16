@@ -25,7 +25,7 @@ POSTGRES_SCHEMA_NAME = "users_purchase_data"
 POSTGRES_TABLE_NAME = "user_purchase"
 
 
-def ingest_data_from_s3(
+def ingest_data_from_s3_old(
     s3_bucket: str,
     s3_key: str,
     postgres_table: str,
@@ -43,7 +43,7 @@ def ingest_data_from_s3(
     s3_hook = S3Hook(aws_conn_id=aws_conn_id)
     psql_hook = PostgresHook(postgres_conn_id)
     local_filename = s3_hook.download_file(key=s3_key, bucket_name=s3_bucket)
-    psql_hook.copy_expert(sql = """\COPY user_purchase(invoice_number,
+    psql_hook.copy_expert(sql = """COPY user_purchase(invoice_number,
                 stock_code,
                 detail,
                 quantity,
@@ -53,6 +53,25 @@ def ingest_data_from_s3(
                 country) 
                 FROM 's3-data-bootcamp-elchemarug0102003/user_purchase.csv' 
                 DELIMITER ',' CSV HEADER;""", filename = local_filename)
+
+    
+
+def ingest_data_from_s3(
+    s3_bucket: str,
+    s3_key: str,
+    postgres_table: str,
+    aws_conn_id: str = "aws_default",
+    postgres_conn_id: str = "postgres_default",):
+    #Open Postgres Connection
+    s3_hook = S3Hook(aws_conn_id=aws_conn_id)
+    local_filename = s3_hook.download_file(key=s3_key, bucket_name=s3_bucket)
+    get_postgres_conn = PostgresHook(postgres_conn_id).get_conn()
+    curr = get_postgres_conn.cursor("cursor")
+    # CSV loading to table.
+    with open(local_filename, 'r') as f:
+        next(f)
+        curr.copy_from(f, postgres_table, sep=',')
+        get_postgres_conn.commit()
 
 
 with DAG(
@@ -70,7 +89,7 @@ with DAG(
         bucket_key=S3_KEY_NAME,
     )
 
-    create_table_entity = PostgresOperator(
+    create_table_entity = PythonOperator(
         task_id="create_table_entity",
         postgres_conn_id=POSTGRES_CONN_ID,
         sql=f"""
