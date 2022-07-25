@@ -10,21 +10,31 @@ resource "aws_s3_bucket" "bucket" {
   }
 }
 
+resource "aws_s3_bucket_object" "object_raw" {
+  bucket   = aws_s3_bucket.bucket.id
+  key      = "raw/"
+  source   = "/dev/null"
+}
+resource "aws_s3_bucket_object" "object_stage" {
+  bucket   = aws_s3_bucket.bucket.id
+  key      = "stage/"
+  source   = "/dev/null"
+}
 resource "aws_s3_bucket_object" "object_movie" {
   bucket   = aws_s3_bucket.bucket.id
-  key      = "movie_reviews.csv"
+  key      = "raw/movie_reviews.csv"
   source   = "data/movie_review.csv"
   etag     = filemd5("data/movie_review.csv")
 }
 resource "aws_s3_bucket_object" "object_log" {
   bucket   = aws_s3_bucket.bucket.id
-  key      = "log_reviews.csv"
+  key      = "raw/log_reviews.csv"
   source   = "data/log_reviews.csv"
   etag     = filemd5("data/log_reviews.csv")
 }
 resource "aws_s3_bucket_object" "object_purchase" {
   bucket   = aws_s3_bucket.bucket.id
-  key      = "user_purchase.csv"
+  key      = "raw/user_purchase.csv"
   source   = "data/user_purchase.csv"
   etag     = filemd5("data/user_purchase.csv")
 }

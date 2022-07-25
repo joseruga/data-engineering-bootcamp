@@ -61,7 +61,7 @@ db_username = "dbuser"
 
 db_password = "josellogg93!"
 
-publicly_accessible = false
+publicly_accessible = true
 
 #### S3 variables ####
 bucket = "s3-data-bootcamp-elchemarug0102003"
