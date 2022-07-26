@@ -17,7 +17,7 @@ with DAG(dag_id = DAG_ID, schedule_interval = "@once",
     tags=[CLOUD_PROVIDER, STABILITY_STATE]) as dag:
     glue_job_step = AwsGlueJobOperator(
         task_id = "glue_job_step",
-        script_location = None,
+        script_location = "s3://s3-data-bootcamp-elchemarug0102003/scripts/logs_transform.py",
         job_name = glue_job_name_logs,
         job_desc = f"triggering glue job {glue_job_name_logs}",
         region_name = region_name,
