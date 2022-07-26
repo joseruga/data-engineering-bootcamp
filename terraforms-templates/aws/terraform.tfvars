@@ -68,5 +68,5 @@ bucket = "s3-data-bootcamp-elchemarug0102003"
 
 acl = "private"
 
-versioning = true
+versioning = false
 

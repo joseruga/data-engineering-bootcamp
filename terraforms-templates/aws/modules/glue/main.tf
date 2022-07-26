@@ -2,7 +2,7 @@ resource "aws_glue_job" "logs_transf" {
   name     = "logs_transf"
   role_arn = "arn:aws:iam::579142603345:role/glue_admin"
   glue_version = "3.0"
-  worker_type = "G 1X"
+  worker_type = "G.1X"
   number_of_workers = "2" 
 
   command {
@@ -16,7 +16,7 @@ resource "aws_glue_job" "revs_transf" {
   name     = "revs_transf"
   role_arn = "arn:aws:iam::579142603345:role/glue_admin"
   glue_version = "3.0"
-  worker_type = "G 1X"
+  worker_type = "G.1X"
   number_of_workers = "2" 
 
   command {
