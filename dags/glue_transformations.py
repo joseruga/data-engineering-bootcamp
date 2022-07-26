@@ -24,3 +24,5 @@ with DAG(dag_id = DAG_ID, schedule_interval = "@once",
         num_of_dpus = 1,
         dag = dag
         )
+    glue_job_step
+    dag.doc_md = __doc__
