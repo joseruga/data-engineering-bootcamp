@@ -65,3 +65,11 @@ module "rds" {
    acl           = var.acl
    versioning    = var.versioning
  }
+
+  module "glue" {
+   source = "./modules/glue"
+
+   vpc_id_glue   = module.networking.vpc_id
+   subnet_glue = module.networking.private_subnets_ids
+   
+ }
